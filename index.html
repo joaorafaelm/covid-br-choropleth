@@ -10,6 +10,7 @@ html, body, #map {
     width: 100%;
 }
 </style>
+<title>COVID-19 choropleth map</title>
 <body>
 <a target="_blank" class="github-fork-ribbon" href="https://github.com/joaorafaelm/covid-br-choropleth" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
 <div id="app">
@@ -53,7 +54,7 @@ $.ajax({
                 currentStrokeWidth: 2,
                 value: {
                     key: "confirmed",
-                    metric: " confirmed"
+                    metric: "confirmed"
                 },
                 extraValues: [{
                     key: "confirmed_per_100k_inhabitants",
