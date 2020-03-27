@@ -15,6 +15,7 @@ html, body, #map {
 <a target="_blank" class="github-fork-ribbon" href="https://github.com/joaorafaelm/covid-br-choropleth" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
 <div id="app">
     <l-map :center="[-15.0843802, -53.3227662]" :zoom="5" :options="mapOptions">
+        <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></v-tilelayer>
         <l-choropleth-layer :data="cities" title-key="city" id-key="city_ibge_code" :value="value" 
             :extra-values="extraValues" geojson-id-key="id" :geojson="geojson" :color-scale="colorScale" :current-stroke-width="currentStrokeWidth" :stroke-width="strokeWidth">
             <template slot-scope="props">
@@ -50,7 +51,7 @@ $.ajax({
                 cities,
                 geojson,
                 colorScale: ["EDB636", "EA9A2D", "E77D24", "E45F1B", "E14012", "DE2009", "DA0000", "D50000", "BD0002", "9C000B", "7A0015"],
-                strokeWidth: .5,
+                strokeWidth: .2,
                 currentStrokeWidth: 2,
                 value: {
                     key: "confirmed",
