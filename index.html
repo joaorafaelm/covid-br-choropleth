@@ -1,0 +1,72 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+<style>
+body {
+    margin:0;
+    padding:0;
+}
+html, body, #map {
+    height: 100%;
+    width: 100%;
+}
+</style>
+<body>
+<a target="_blank" class="github-fork-ribbon" href="https://github.com/joaorafaelm/covid-br-choropleth" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+<div id="app">
+    <l-map :center="[-15.0843802, -53.3227662]" :zoom="5" :options="mapOptions">
+        <l-choropleth-layer :data="cities" title-key="city" id-key="city_ibge_code" :value="value" 
+            :extra-values="extraValues" geojson-id-key="id" :geojson="geojson" :color-scale="colorScale" :current-stroke-width="currentStrokeWidth" :stroke-width="strokeWidth">
+            <template slot-scope="props">
+                <l-info-control :item="props.currentItem" :unit="props.unit" title="City" placeholder="Hover over a city" position="bottomright">
+                </l-info-control>
+                <l-reference-chart title="Confirmed cases" :color-scale="colorScale" :min="props.min" :max="props.max" position="bottomleft">
+                </l-reference-chart>
+            </template>
+        </l-choropleth-layer>
+    </l-map>
+</div>
+<script src="geo.js" charset="UTF-8"></script>
+<script src="https://unpkg.com/vue@2.5.13/dist/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
+<script src="https://unpkg.com/vue2-leaflet@1.0.2/dist/vue2-leaflet.min.js"></script>
+<script src="https://unpkg.com/vue-choropleth@0.3.1/dist/vue-choropleth.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+var cities = [];
+
+$.ajax({
+    type: "GET",  
+    url: "https://brasil.io/api/dataset/covid19/caso/data?is_last=True",
+    dataType: "json",
+    success: function(response) {
+        cities = response.results;
+        Vue.component('l-map', Vue2Leaflet.LMap);
+        Vue.use(ChoroplethMap);
+        var app = new Vue({
+            el: "#app",
+            data: {
+                center: [-15.0843802, -53.3227662],
+                cities,
+                geojson,
+                colorScale: ["e7d090", "e9ae7b", "de7062", "eb4034"],
+                strokeWidth: 1,
+                currentStrokeWidth: 2,
+                value: {
+                    key: "confirmed",
+                    metric: " confirmed"
+                },
+                extraValues: [{
+                    key: "confirmed_per_100k_inhabitants",
+                    metric: " confirmed per 100k inhabitants"
+                }],
+                mapOptions: {
+                    attributionControl: false
+                }
+            }
+        });
+    }
+});
+
+</script>
+</body>
