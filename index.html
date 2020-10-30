@@ -49,7 +49,7 @@ html, body, #map {
 <script>
 $.ajax({
     type: "GET",  
-    url: "https://brasil.io/api/dataset/covid19/caso_full/data?is_last=True",
+    url: "https://brasil.io/api/dataset/covid19/caso_full/data?is_last=True&page_size=20000",
     dataType: "json",
     success: function(response) {
         var cities = response.results;
