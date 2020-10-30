@@ -49,7 +49,7 @@ html, body, #map {
 <script>
 $.ajax({
     type: "GET",  
-    url: "https://brasil.io/api/dataset/covid19/caso/data?is_last=True",
+    url: "https://brasil.io/api/dataset/covid19/caso_full/data?is_last=True",
     dataType: "json",
     success: function(response) {
         var cities = response.results;
@@ -85,10 +85,10 @@ $.ajax({
                     metric: "confirmed"
                 },
                 extraValues: [{
-                    key: "deaths",
+                    key: "last_available_deaths",
                     metric: "deaths"
                 }, {
-                    key: "death_rate",
+                    key: "last_available_death_rate",
                     metric: "death rate"
                 }],
                 mapOptions: {
