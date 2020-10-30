@@ -60,9 +60,10 @@ $.ajax({
         });
         var features = [];
         geojson.features.forEach(function(item, index, object) {
-            var found = cities.filter(e => e.city_ibge_code == item.properties.id);
+            var found = cities.filter(e => String(e.city_ibge_code) == String(item.properties.id));
             if (found.length > 0) {
                 features.push(item);
+                console.log("Found " + found.length + " cities")
                 return;
             }
         });
